@@ -1,0 +1,66 @@
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+cookie_clicker_url = "https://orteil.dashnet.org/cookieclicker/"
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("detach", True)
+
+driver = webdriver.Chrome(options=chrome_options)
+driver.get(url=cookie_clicker_url)
+
+# Accepting cookies (xd)
+consent_welcome_page = driver.find_element(By.CSS_SELECTOR, ".fc-button-label")
+consent_welcome_page.click()
+
+# Select language - Polish
+time.sleep(3)
+language_dutch_choice = driver.find_element(By.CSS_SELECTOR, value="div#langSelect-NL.langSelectButton")
+language_dutch_choice.click()  # CLICK!
+
+time.sleep(3)
+big_cookie = driver.find_element(By.ID, "bigCookie")
+
+timeout = time.time() + 7
+five_min = time.time() + 60*5
+print(f"Time plus five minutes: {five_min}, present tense: {time.time()}")
+
+while time.time() < five_min:
+    big_cookie.click()
+    # Every 5 seconds:
+    if time.time() > timeout:
+        big_cookie.click()
+        cookies_count = driver.find_element(By.ID, "cookies")
+
+        # UPGRADING MODE - Buying Mods
+        crate_upgrade_enabled = driver.find_elements(By.CSS_SELECTOR, ".crate.upgrade.enabled")
+        for index, element in enumerate(crate_upgrade_enabled):
+            print("💵💵💵 ENTERING CRATE UPGRADING MODE 💵💵💵")
+            try:
+                element.click()
+            except:
+                print("Got some problems")
+            else:
+                print("Upgrade Purchased 💵💵💵")
+
+        # UPGRADING MODE - Buying Grandmas etc.
+        available_upgrades = driver.find_elements(By.CSS_SELECTOR, ".product.unlocked.enabled")
+        single_upgrade_price = 0
+        save_highest_price_index = 0
+        for index, element in enumerate(available_upgrades):
+            text = element.text.split("\n")
+            if single_upgrade_price <= int(text[1].replace(",", "")):
+                single_upgrade_price = int(text[1].replace(",", ""))
+                save_highest_price_index = index
+
+        print("🤑🤑🤑 ENTERING UPGRADING MODE 🤑🤑🤑")
+        try:
+            best_deal = available_upgrades[save_highest_price_index]
+            best_deal.click()
+            best_deal_text = best_deal.text.split('\n')
+
+            print(f"Upgrade has been bought: '{best_deal_text[0]}' for {best_deal_text[1]}$.")
+        except:
+            print("Got some problems")
+
+        timeout = time.time() + 5
