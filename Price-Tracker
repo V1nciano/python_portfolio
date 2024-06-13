@@ -3,9 +3,9 @@ from bs4 import BeautifulSoup
 import lxml
 import smtplib
 
-MY_EMAIL = "python.vinciano@gmail.com"
-RECEIVER = "python.vinciano@gmail.com"
-MY_PASSWORD = "fsglybcigxvffnon"
+MY_EMAIL = "..........."
+RECEIVER = "............"
+MY_PASSWORD = "..........."
 BUY_PRICE = 100
 
 URL = "https://www.amazon.com/dp/B075CYMYK6?psc=1&ref_=cm_sw_r_cp_ud_ct_FM9M699VKHTT47YD50Q6"
