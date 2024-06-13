@@ -1,0 +1,63 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver import Keys
+import time
+
+USERNAME = "........"
+PASSWORD = "........"
+
+tinder_url = "https://tinder.com/"
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("detach", True)
+
+driver = webdriver.Chrome(options=chrome_options)
+driver.get(url=tinder_url)
+
+time.sleep(2)
+sign_in_button = driver.find_element(By.XPATH, '//*[@id="q-766335200"]/div/div[1]/div/main/div[1]/div/div/div/'
+                                               'div/header/div/div[2]/div[2]/a/div[2]/div[2]/div')
+sign_in_button.click()
+
+time.sleep(2)
+facebook_button = driver.find_element(By.XPATH, '//*[@id="q1800251020"]/div/div[1]/div/div[1]/div/div/div[2]/'
+                                                'div[2]/span/div[2]/button/div[2]/div[2]/div[2]/div/div')
+facebook_button.click()
+
+# Switch to Facebook login page
+time.sleep(2)
+base_window = driver.window_handles[0]
+fb_login_window = driver.window_handles[1]
+driver.switch_to.window(fb_login_window)
+
+# Accept Facebook cookies
+time.sleep(1)
+accept_cookies = driver.find_element(By.XPATH, '//*[@id="facebook"]/body/div[2]/div[2]/div/div/div/div/div[3]/'
+                                               'div[2]/div/div[2]/div[1]')
+accept_cookies.click()
+
+# Login and hit Enter
+username_fb = driver.find_element(By.XPATH, '//*[@id="email"]')
+username_fb.click()
+username_fb.send_keys(USERNAME, Keys.TAB)
+
+password_fb = driver.find_element(By.XPATH, '//*[@id="pass"]')
+password_fb.send_keys(PASSWORD, Keys.ENTER)
+
+# Switch back to Tinder Window
+driver.switch_to.window(base_window)
+
+time.sleep(5)
+
+# Allow location
+allow_location_button = driver.find_element(By.XPATH, value='//*[@id="c-1108700915"]/main/div/div/div/div[3]/button[1]'
+                                                            '/div[2]')
+allow_location_button.click()
+
+# Disallow notifications
+notifications_button = driver.find_element(By.XPATH, value='//*[@id="c-1108700915"]/main/div[1]/div/div/div[3]/'
+                                                           'button[2]/div[2]')
+notifications_button.click()
+
+# Allow cookies
+cookies = driver.find_element(By.XPATH, value='//*[@id="content"]/div/div[2]/div/div/div[1]/button')
+cookies.click()
