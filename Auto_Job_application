@@ -4,9 +4,9 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 import time
 
-ACCOUNT_EMAIL = "python.vinciano@gmail.com"
-ACCOUNT_PASSWORD = "gacjyj-qetmy9-mivQub"
-PHONE = "0636487495"
+ACCOUNT_EMAIL = "........"
+ACCOUNT_PASSWORD = "........."
+PHONE = ".........."
 
 
 def abort_application():
